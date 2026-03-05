@@ -17,6 +17,11 @@
     "open":      "^9.1.0",
     "chalk":     "^4.1.2"
   },
+  "files": [
+    "bin/",
+    "src/",
+    "public/"
+  ],
   "keywords": [
     "havn", "developer", "dashboard", "localhost",
     "devtools", "ports", "services", "monitor"
