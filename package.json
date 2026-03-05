@@ -1,5 +1,5 @@
 {
-  "name": "havn",
+  "name": "@haseeb-xd/havn",
   "version": "1.0.0",
   "description": "Local development dashboard — see every running service at a glance",
   "bin": {
