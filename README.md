@@ -16,7 +16,7 @@ Instantly see every service running on your machine — Redis, Postgres, Kafka, 
 </div>
 
 ```
-npm install -g @haseeb-xd/havn && havn
+npm install -g @haseeb-xd/havn@latest && havn
 ```
 
 Opens at **http://localhost:1111**
