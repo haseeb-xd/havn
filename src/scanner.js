@@ -153,38 +153,72 @@ const SYSTEM_PROCESS_NAMES = new Set([
   'avahi-daemon', 'cupsd', 'rsyslogd',
 ]);
 
-// Consumer apps that expose local HTTP/WS servers for their own IPC,
-// not for development use — never show these in the dashboard.
-const NON_DEV_PROCESS_NAMES = new Set([
-  // Audio
-  'nahimicservice.exe', 'nahimic.exe', 'rtkaudioservice.exe',
-  // Media / communication
-  'spotify.exe', 'discord.exe', 'teams.exe', 'slack.exe', 'zoom.exe',
-  'whatsapp.exe', 'telegram.exe', 'signal.exe',
-  // Creative / office
-  'adobe desktop service.exe', 'adobeupdatedaemon.exe', 'acrord32.exe',
-  'creativecloud.exe',
-  // Gaming / launchers
-  'riotclientservices.exe', 'epicgameslauncher.exe', 'steamwebhelper.exe',
-  'steam.exe', 'origin.exe', 'eadesktop.exe', 'battlenet.exe',
-  // Browser embedded frameworks (internal IPC ports, not web servers)
-  'cef_server.exe', 'cefsharp.exe',
-  // IDEs — expose internal ports for language servers, debug adapters, IPC.
-  // The user's actual services show up as node.exe / java.exe / python.exe etc.
-  'code.exe', 'code - insiders.exe', 'cursor.exe',
-  'idea64.exe', 'idea.exe', 'webstorm64.exe', 'pycharm64.exe', 'clion64.exe',
-  'rider64.exe', 'datagrip64.exe', 'goland64.exe', 'phpstorm64.exe',
+// Allowlist of process names that are known dev runtimes, servers, or tooling.
+// Anything NOT in this list (and not on a KNOWN_SERVICES port) is hidden.
+const DEV_PROCESS_ALLOWLIST = new Set([
+  // JS runtimes
+  'node', 'node.exe', 'bun', 'bun.exe', 'deno', 'deno.exe',
+  // JVM
+  'java', 'java.exe',
+  // Python
+  'python', 'python.exe', 'python3', 'python3.exe',
+  // Ruby
+  'ruby', 'ruby.exe',
+  // Go
+  'go', 'go.exe',
+  // .NET / C#
+  'dotnet', 'dotnet.exe',
+  // PHP
+  'php', 'php.exe', 'php-fpm',
+  // Rust
+  'cargo', 'cargo.exe',
+  // Dart / Flutter
+  'dart', 'dart.exe',
+  // Elixir / Erlang
+  'beam', 'beam.smp', 'elixir',
+  // Databases
+  'redis-server', 'redis',
+  'postgres', 'postgres.exe',
+  'mysqld', 'mysqld.exe',
+  'mongod', 'mongod.exe',
+  'elasticsearch',
+  'cassandra',
+  'influxd',
+  'etcd',
+  'cockroach', 'cockroach.exe',
+  'couchdb',
+  // Message queues
+  'kafka', 'zookeeper',
+  // Web servers / proxies
+  'nginx', 'nginx.exe',
+  'apache2', 'httpd', 'httpd.exe',
+  'caddy', 'caddy.exe',
+  'traefik', 'traefik.exe',
+  'haproxy',
+  // Containers / orchestration
+  'docker', 'docker.exe', 'com.docker.backend', 'dockerd',
+  // Dev tooling / infra
+  'vault', 'vault.exe',
+  'consul', 'consul.exe',
+  'minio', 'minio.exe',
+  'prometheus', 'prometheus.exe',
+  'grafana', 'grafana-server',
+  'jaeger',
 ]);
 
 // Returns true if this port should be hidden from the dashboard
 function isSystemPort(port, processName) {
   if (processName) {
     const name = processName.toLowerCase();
+    // Always hide OS internals
     if (SYSTEM_PROCESS_NAMES.has(name)) return true;
-    if (NON_DEV_PROCESS_NAMES.has(name)) return true;
+    // Hide if the process is not a known dev tool AND the port is not a known service
+    if (!DEV_PROCESS_ALLOWLIST.has(name) && !KNOWN_SERVICES[port]) return true;
+  } else {
+    // No process info — only show ports we explicitly know about
+    if (!KNOWN_SERVICES[port]) return true;
   }
   // Windows ephemeral ports (49152–65535) that aren't an explicitly known service
-  // are almost always OS RPC/COM endpoints — filter them unless we know the port
   if (port > 49151 && !KNOWN_SERVICES[port]) return true;
   return false;
 }
