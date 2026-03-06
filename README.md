@@ -21,6 +21,8 @@ npm install -g @haseeb-xd/havn@latest && havn
 
 Opens at **http://localhost:1111**
 
+<img src="public/images/havn-screenshot.png" alt="havn dashboard" width="100%" />
+
 ---
 
 ## Features
@@ -38,7 +40,7 @@ Opens at **http://localhost:1111**
 ## Install
 
 ```bash
-npm install -g @haseeb-xd/havn
+npm install -g @haseeb-xd/havn@latest
 ```
 
 **Requirements:** Node.js ≥ 16
