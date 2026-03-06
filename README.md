@@ -1,11 +1,19 @@
-# havn ⚓ &nbsp;—&nbsp; a harbor for your localhost
+<div align="center">
+
+<img src="public/images/havn-logo.png" alt="havn logo" height="80" />
+
+# havn
+
+**A harbor for your localhost.**
 
 [![npm version](https://img.shields.io/npm/v/@haseeb-xd/havn?color=4F7FFF&style=flat-square)](https://www.npmjs.com/package/@haseeb-xd/havn)
 [![node](https://img.shields.io/badge/node-%3E%3D16-22C55E?style=flat-square)](https://nodejs.org)
 [![license](https://img.shields.io/badge/license-MIT-9095A8?style=flat-square)](./LICENSE)
 [![platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Windows-9095A8?style=flat-square)]()
 
-> Instantly see every service running on your machine — Redis, Postgres, Kafka, Spring Boot, Next.js, Docker and 40+ more 
+Instantly see every service running on your machine — Redis, Postgres, Kafka, Spring Boot, Next.js, Docker and 40+ more
+
+</div>
 
 ```
 npm install -g @haseeb-xd/havn && havn

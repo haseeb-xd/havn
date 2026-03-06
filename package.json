@@ -1,6 +1,6 @@
 {
   "name": "@haseeb-xd/havn",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Local development dashboard — see every running service at a glance",
   "bin": {
     "havn": "./bin/havn.js"
